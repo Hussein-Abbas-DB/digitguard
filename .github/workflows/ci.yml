@@ -1,0 +1,27 @@
+name: Train and test
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            requirements-dev.txt
+      - run: python -m pip install -r requirements-dev.txt
+      - run: python -m digitguard.train
+      - run: python -m digitguard.report
+      - run: python -m pytest -q
+      - uses: actions/upload-artifact@v4
+        with:
+          name: evaluation
+          path: reports/

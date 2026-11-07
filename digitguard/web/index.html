@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DigitGuard · Inference Lab</title>
+<link rel="stylesheet" href="/static/style.css">
+<script src="/static/lab.js" defer></script>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">DIGITGUARD / INFERENCE LAB</p>
+    <h1>Can the model read it?</h1>
+    <p>Draw a digit on the 8 × 8 grid or start with a held-out sample. See when the model accepts a prediction or abstains.</p>
+  </header>
+  <div class="layout">
+    <section class="panel">
+      <h2>Input grid</h2>
+      <p>Drag to paint or press Enter on a focused cell. Load a sample to edit real grayscale pixels.</p>
+      <div id="grid" aria-label="8 by 8 drawing grid"></div>
+      <div class="controls">
+        <label>Brush <input id="brush" type="range" min="1" max="16" value="16"></label>
+        <button id="erase" aria-pressed="false">Erase</button>
+        <button id="clear">Clear</button>
+      </div>
+      <div class="controls">
+        <label>Sample <select id="digit"></select></label>
+        <button id="sample">Load</button>
+        <button id="predict" class="primary">Predict</button>
+      </div>
+    </section>
+    <section class="panel">
+      <h2>Model output</h2>
+      <p id="status" role="status">Waiting for input.</p>
+      <p id="candidates"></p>
+      <ol id="scores" aria-label="Class probabilities"></ol>
+    </section>
+  </div>
+  <footer><a href="/docs">OpenAPI documentation</a> · 8 × 8 grayscale pixels with intensity 0–16</footer>
+</main>
+</body>
+</html>
